@@ -14,7 +14,7 @@ import com.example.androiddemo.databinding.FragmentMainBinding
 /**
  * A placeholder fragment containing a simple view.
  */
-class PlaceholderFragment : Fragment() {
+open class PlaceholderFragment : Fragment() {
 
     private lateinit var pageViewModel: PageViewModel
     private var _binding: FragmentMainBinding? = null
@@ -43,6 +43,10 @@ class PlaceholderFragment : Fragment() {
             textView.text = it
         })
         return root
+    }
+
+    open fun getTitle(): CharSequence {
+        return javaClass.simpleName
     }
 
     companion object {

@@ -1,8 +1,13 @@
 package com.example.androiddemo.layoutmanager
 
+import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import java.lang.Math.max
 
+/**
+ * 流式布局 LayoutManager
+ * https://blog.csdn.net/zxt0601/article/details/52956504
+ */
 class FlowLayoutManager: RecyclerView.LayoutManager() {
 
     override fun generateDefaultLayoutParams(): RecyclerView.LayoutParams {
@@ -72,11 +77,32 @@ class FlowLayoutManager: RecyclerView.LayoutManager() {
         }
     }
 
+    override fun canScrollVertically(): Boolean {
+        return true
+    }
+
+    override fun scrollVerticallyBy(
+        dy: Int,
+        recycler: RecyclerView.Recycler?,
+        state: RecyclerView.State?
+    ): Int {
+        Log.d(
+            Companion.TAG,
+            "scrollVerticallyBy() called with: dy = $dy"
+        )
+        offsetChildrenVertical(-dy)
+        return dy
+    }
+
     private fun getHorizontalSpace(): Int {
         return width - paddingLeft - paddingRight
     }
 
     private fun getVerticalSpace(): Int {
         return height - paddingTop - paddingBottom
+    }
+
+    companion object {
+        private const val TAG = "FlowLayoutManager"
     }
 }
